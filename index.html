@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>祝你生日快乐！✨</title>
+    <style>
+        /* 全局样式与星星人主题色（梦幻蓝紫、暖金、星光白） */
+        :root {
+            --bg-color: #0d1b2a;
+            --accent-pink: #ffb7c5;
+            --star-gold: #ffd700;
+            --text-white: #e0e1dd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 动态背景星空 */
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: radial-gradient(circle at center, #1b263b 0%, #0d1b2a 100%);
+        }
+
+        /* 闪烁的星星 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 音乐播放器悬浮窗 */
+        .music-player {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            padding: 10px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* 主体容器 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* 头部：星星人浪漫问候 */
+        header {
+            margin-top: 60px;
+            margin-bottom: 50px;
+        }
+
+        .star-man-icon {
+            font-size: 70px;
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--star-gold);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            margin-top: 20px;
+        }
+
+        /* 祝福语板块 */
+        .blessings {
+            background: rgba(27, 38, 59, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .blessings p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        /* 拍立得照片墙 */
+        .photo-wall {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px 15px 25px 15px;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+            border-radius: 4px;
+            max-width: 90%;
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(3deg);
+        }
+
+        .polaroid:hover {
+            transform: scale(1.03) rotate(0deg);
+            z-index: 10;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+        }
+
+        .polaroid .caption {
+            font-family: "楷体", "STKaiti", serif;
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: rgba(224, 225, 221, 0.5);
+        }
+
+        /* 动画效果 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="space-bg"></div>
+    <div class="stars" id="stars-container"></div>
+
+    <div class="music-player">
+        <span style="font-size: 14px;">🎵 BGM</span>
+        <audio id="bgm" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" controls loop style="width: 180px; height: 30px;"></audio>
+    </div>
+
+    <div class="container">
+        
+        <header>
+            <div class="star-man-icon">🧑‍🚀✨</div> 
+            <h1>Happy Birthday to My Best Friend!</h1>
+            <p style="color: var(--accent-pink); margin-top: 10px; font-weight: bold;">—— 愿你像星星人一样，永远拥抱群星与童话 ——</p>
+        </header>
+
+        <section class="blessings">
+            <h2 style="color: var(--star-gold); margin-bottom: 20px;">🌟 致我的好朋友：</h2>
+            <p>范馨忆生日快乐！</p>
+            <p>不是星星人买不起 而是手搓网站更有性价比</p>
+            <p>你是一个特别好的室友 也是很好的伙伴 祝你二十代勇敢、坚韧、有野心！</p>
+            <p style="text-align: right; font-weight: bold; color: var(--accent-pink);">—— 涂丁</p>
+        </section>
+
+        <h2 style="color: var(--star-gold); margin-bottom: 30px;">📸 偷的图：</h2>
+        <section class="photo-wall">
+            
+            <div class="polaroid">
+                <img src="desktop/images/p1.jpg" alt="照片1">
+                <div class="caption">好看👍</div>
+            </div>
+
+            <div class="polaroid">
+                <img src="desktop/images/p2.jpg" alt="照片2">
+                <div class="caption">很好看👍</div>
+            </div>
+
+        </section>
+
+        <footer>
+            <p>再说一遍生日快乐！！</p>
+        </footer>
+    </div>
+
+    <script>
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            const starCount = 80;
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                // 偶尔有几个星星带有星星人的金色
+                if(Math.random() > 0.8) {
+                    star.style.background = '#ffd700';
+                }
+                container.appendChild(star);
+            }
+        }
+        createStars();
+    </script>
+</body>
+</html>
