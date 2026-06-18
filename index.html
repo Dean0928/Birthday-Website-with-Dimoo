@@ -181,7 +181,37 @@
     </style>
 </head>
 <body>
+<script>
+    // 1. Give the header a gentle 'Dimoo' text pulse
+    const mainHeader = document.querySelector('h1');
+    setInterval(() => {
+        mainHeader.style.transition = 'all 1.5s ease-in-out';
+        if (mainHeader.style.textShadow.includes('25px')) {
+            mainHeader.style.textShadow = '0 0 15px rgba(255, 215, 0, 0.6)'; // Normal
+        } else {
+            mainHeader.style.textShadow = '0 0 25px rgba(255, 215, 0, 0.9)'; // Enhanced glow
+        }
+    }, 1500);
 
+    // 2. Add 'Dimoo-esque' dust effect when hovering over photos
+    const photos = document.querySelectorAll('.polaroid');
+    photos.forEach(photo => {
+        photo.addEventListener('mouseenter', () => {
+            photo.style.transition = 'all 0.4s ease'; // Smooth entry
+            photo.style.transform = 'scale(1.05) translateY(-5px) rotate(0deg)';
+        });
+        photo.addEventListener('mouseleave', () => {
+            photo.style.transform = ''; // Instant reset for next action
+        });
+    });
+
+    // 3. Keep the blessing section visible initially but slightly dynamic
+    const blessing = document.querySelector('.blessings');
+    blessing.style.transition = 'all 1s ease-out';
+    blessing.style.opacity = '1';
+    blessing.style.transform = 'translateY(0)'; // Base position
+
+</script>
     <div class="space-bg"></div>
     <div class="stars" id="stars-container"></div>
 
